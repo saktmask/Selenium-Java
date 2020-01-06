@@ -1,12 +1,9 @@
 package week7.assignments;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.Select;
 
-public class CreateIncident extends Base {
+public class CreateIncidentNegative extends Base {
 
 	public static void main(String[] args) throws InterruptedException {
 		Base b=new Base();
@@ -34,27 +31,26 @@ public class CreateIncident extends Base {
 
 		String src_IncidentNumber = driver.findElementById("incident.number").getText();
 
-		WebElement element_CallerId = driver.findElementById("sys_display.incident.caller_id");
-		element_CallerId.sendKeys("System Administrator");
-		Thread.sleep(2000);
-		element_CallerId.sendKeys(Keys.TAB);
+		Select s=new Select(driver.findElementById("incident.state"));
+		s.selectByVisibleText("In Progress");
 
-		driver.findElementById("incident.short_description").sendKeys("Test Description");
+		Select s1=new Select(driver.findElementById("incident.urgency"));
+		s1.selectByValue("1");
 
 		driver.findElementById("sysverb_insert").click();
 
-		String incident_Number = driver.findElementByXPath("//table[@id='incident_table']//tr[1]//td[3]").getText();
-		System.out.println(incident_Number);
-
-		if(src_IncidentNumber.equals(incident_Number))
+		
+		boolean displayed=driver.
+				findElementByXPath("(//div[@role='alert' "
+						+ "and @class='outputmsg outputmsg_error notification notification-error'])").isDisplayed();
+		if(displayed)
 		{
-			System.out.println("Created successfully");
+			String text = driver.
+					findElementByXPath("(//div[@role='alert' "
+							+ "and @class='outputmsg outputmsg_error notification notification-error'])").getText();
+			System.out.println(text);
+			driver.close();
 		}
-		else
-		{
-			System.out.println("Not created");
-		}
-
 
 	}
 
