@@ -31,6 +31,7 @@ public class CreateIncidentNegative extends Base {
 
 		String src_IncidentNumber = driver.findElementById("incident.number").getText();
 
+		System.out.println(src_IncidentNumber);
 		Select s=new Select(driver.findElementById("incident.state"));
 		s.selectByVisibleText("In Progress");
 

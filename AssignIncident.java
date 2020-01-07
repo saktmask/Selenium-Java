@@ -1,9 +1,8 @@
 package week7.assignments;
 
-import org.openqa.selenium.By;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 
 public class AssignIncident extends Base{
 
@@ -22,17 +21,12 @@ public class AssignIncident extends Base{
 		driver.findElementById("sysverb_login").click();
 		
 		Thread.sleep(3000);
-
-		//b.waitForVisibilityOfElement(By.xpath("(//span[text()='Incident'])[1]"));
-		driver.findElementByXPath("(//span[text()='Incident'])[1]").click();
-
-		b.waitForElementClickable(By.xpath("(//div[@class='sn-widget-list-title' and text()='All'])[1]"));
-
-		driver.findElementByXPath("(//div[@class='sn-widget-list-title' and text()='All'])[1]").click();
+		
+		driver.findElementByXPath("(//div[text()='Incidents'])[1]").click();
 
 		driver.switchTo().frame(driver.findElementById("gsft_main"));
 
-		String input="INC0010042";
+		String input="INC0010392";
 		WebElement elementSearch = driver.findElementByXPath("(//input[@class='form-control'])[1]");
 		elementSearch.sendKeys(input);
 		elementSearch.sendKeys(Keys.ENTER);
@@ -40,8 +34,14 @@ public class AssignIncident extends Base{
 		String incident_Number = driver.findElementByXPath("//table[@id='incident_table']//tr[1]//td[3]").getText();
 		if(incident_Number.equals(input))
 		{
-			driver.findElementByXPath("//table[@id='incident_table']//tr[1]//td[3]").click();
-
+			driver.findElementByXPath("//h2[@class='navbar-title list_title ' and text()='Incidents'] ").click();
+			driver.findElementByXPath("//div[@role='menuitem' and text()='View']").click();
+			driver.findElementByXPath("//div[@class='context_item' and text()='Default view']").click();
+			
+			driver.findElementByXPath("//table[@id='incident_table']//tr[1]//td[3]/a").click();	
+			
+			Thread.sleep(3000);
+			
 			WebElement elementAssignGroup = driver.findElementById("sys_display.incident.assignment_group");
 			elementAssignGroup.sendKeys(Keys.CLEAR);
 			Thread.sleep(1000);

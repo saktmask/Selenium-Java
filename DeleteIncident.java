@@ -5,7 +5,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-public class ResolveIncident extends Base{
+public class DeleteIncident extends Base{
 
 	public static void main(String[] args) throws InterruptedException {
 
@@ -46,7 +46,7 @@ public class ResolveIncident extends Base{
 			driver.findElementByXPath("//table[@id='incident_table']//tr[1]//td[3]").click();
 
 			Thread.sleep(3000);
-			Select s=new Select(driver.findElementById("incident.state"));
+			/*Select s=new Select(driver.findElementById("incident.state"));
 			s.selectByVisibleText("Resolved");
 
 			driver.findElementByXPath("//span[@class='tab_caption_text' and text()='Resolution Information']").click();
@@ -54,7 +54,7 @@ public class ResolveIncident extends Base{
 			
 			Select s_close=new Select(driver.findElementById("incident.close_code"));
 			s_close.selectByValue("Closed/Resolved by Caller");
-			
+			*/
 			driver.findElementById("sysverb_update").click();
 
 		}

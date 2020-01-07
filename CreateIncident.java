@@ -3,8 +3,6 @@ package week7.assignments;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CreateIncident extends Base {
 
@@ -23,38 +21,42 @@ public class CreateIncident extends Base {
 
 		Thread.sleep(3000);
 
-		driver.findElementByXPath("(//span[text()='Incident'])[1]").click();
-		driver.findElementByXPath("(//div[@class='sn-widget-list-title' and text()='Create New'])[1]").click();
-		String title2 = driver.getTitle();
-		System.out.println(title2);
+		driver.findElementByXPath("(//div[text()='Incidents'])[1]").click();
 
 		driver.switchTo().frame(driver.findElementById("gsft_main"));
 
-		b.waitForElementClickable(By.id("sys_display.incident.caller_id"));
+		b.waitForElementClickable(By.id("sysverb_new"));
+		driver.findElementById("sysverb_new").click();
 
-		String src_IncidentNumber = driver.findElementById("incident.number").getText();
+		String title2 = driver.getTitle();
+		System.out.println(title2);
 
-		WebElement element_CallerId = driver.findElementById("sys_display.incident.caller_id");
-		element_CallerId.sendKeys("System Administrator");
-		Thread.sleep(2000);
-		element_CallerId.sendKeys(Keys.TAB);
-
+		b.waitForElementClickable(By.id("incident.number"));
+		String src_IncidentNumber = driver.findElementById("incident.number").getAttribute("value");
+		System.out.println(src_IncidentNumber);
+			
 		driver.findElementById("incident.short_description").sendKeys("Test Description");
 
 		driver.findElementById("sysverb_insert").click();
 
+		Thread.sleep(3000);
+
+		WebElement elementSearch = driver.findElementByXPath("(//input[@class='form-control'])[1]");
+		elementSearch.sendKeys(src_IncidentNumber);
+		elementSearch.sendKeys(Keys.ENTER);
+
 		String incident_Number = driver.findElementByXPath("//table[@id='incident_table']//tr[1]//td[3]").getText();
-		System.out.println(incident_Number);
 
 		if(src_IncidentNumber.equals(incident_Number))
 		{
 			System.out.println("Created successfully");
+			driver.close();
+
 		}
 		else
 		{
 			System.out.println("Not created");
 		}
-
 
 	}
 

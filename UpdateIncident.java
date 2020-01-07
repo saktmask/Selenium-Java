@@ -23,32 +23,36 @@ public class UpdateIncident extends Base{
 
 		Thread.sleep(3000);
 
-		driver.findElementByXPath("(//span[text()='Incident'])[1]").click();
-
-		b.waitForElementClickable(By.xpath("(//div[@class='sn-widget-list-title' and text()='All'])[1]"));
-
-		driver.findElementByXPath("(//div[@class='sn-widget-list-title' and text()='All'])[1]").click();
+		driver.findElementByXPath("(//div[text()='Incidents'])[1]").click();
 
 		driver.switchTo().frame(driver.findElementById("gsft_main"));
+		
+		b.waitForElementClickable(By.className("form-control"));
+		
+		Select s_num=new Select(driver.findElementByClassName("form-control"));
+		s_num.selectByValue("number");
+		
 		String input="INC0010042";
 		WebElement elementSearch = driver.findElementByXPath("(//input[@class='form-control'])[1]");
 		elementSearch.sendKeys(input);
 		elementSearch.sendKeys(Keys.ENTER);
 
-		String incident_Number = driver.findElementByXPath("//table[@id='incident_table']//tr[1]//td[3]").getText();
+		Thread.sleep(3000);
+		String incident_Number = driver.findElementByXPath("//table[@id='incident_table']//tr[1]//td[3]/a").getText();
+		
 		if(incident_Number.equals(input))
 		{
-			driver.findElementByXPath("//table[@id='incident_table']//tr[1]//td[3]").click();
+			driver.findElementByXPath("//table[@id='incident_table']//tr[1]//td[3]/a").click();
 
 			Select s=new Select(driver.findElementById("incident.state"));
 			s.selectByVisibleText("In Progress");
-			System.out.println("State:");
-			System.out.println(s.getFirstSelectedOption().getText());
+			//System.out.println("State:");
+			//System.out.println(s.getFirstSelectedOption().getText());
 
 			Select s1=new Select(driver.findElementById("incident.urgency"));
 			s1.selectByValue("1");
-			System.out.println("Urgency:");
-			System.out.println(s1.getFirstSelectedOption().getText());
+			//System.out.println("Urgency:");
+			//System.out.println(s1.getFirstSelectedOption().getText());
 
 			driver.findElementById("sysverb_update").click();
 
@@ -57,8 +61,8 @@ public class UpdateIncident extends Base{
 		{
 			System.out.println("Selected different Incident");
 		}
-		System.out.println(driver.findElementByXPath("//table[@id='incident_table']//tr[1]//td[7]").getText());
-		System.out.println(driver.findElementByXPath("//table[@id='incident_table']//tr[1]//td[8]").getText());
+		System.out.println("Priority: " +driver.findElementByXPath("//table[@id='incident_table']//tr[1]//td[6]").getText());
+		System.out.println("State: "+driver.findElementByXPath("//table[@id='incident_table']//tr[1]//td[7]").getText());
 
 	}
 
