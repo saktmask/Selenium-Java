@@ -15,8 +15,13 @@ public class CreateIncident extends Base {
 
 		driver.switchTo().frame(0);
 
+		logger.info("Entering username");
 		driver.findElementById("user_name").sendKeys("admin");
+		
+		logger.info("Entering password");
 		driver.findElementById("user_password").sendKeys("India@1234");
+		
+		logger.info("Clicking Login button");
 		driver.findElementById("sysverb_login").click();
 
 		Thread.sleep(3000);
